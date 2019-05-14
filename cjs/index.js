@@ -1,0 +1,35 @@
+'use strict';
+const {apply, call} = require('safer-function');
+
+const {freeze, setPrototypeOf} = Object;
+const {prototype: _prototype, reject: _reject, resolve: _resolve} = Promise;
+const {catch: _catch, then: _then} = _prototype;
+
+class SaferPromise extends Promise {
+  static reject(value) {
+    return call(_reject, SaferPromise, convert(value));
+  }
+  static resolve(value) {
+    return call(_resolve, SaferPromise, convert(value));
+  }
+  constructor(fn) {
+    freeze(super(fn));
+  }
+  catch() {
+    return apply(_catch, this, arguments);
+  }
+  then() {
+    return apply(_then, this, arguments);
+  }
+}
+
+const {prototype, reject, resolve} = SaferPromise;
+const convert = value => setPrototypeOf(value, prototype);
+
+freeze(SaferPromise);
+freeze(prototype);
+
+Object.defineProperty(exports, '__esModule', {value: true}).default = SaferPromise;
+exports.Promise = SaferPromise;
+exports.reject = reject;
+exports.resolve = resolve;

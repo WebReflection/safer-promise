@@ -1,0 +1,41 @@
+{
+  "name": "safer-promise",
+  "version": "0.0.0",
+  "description": "A Promise that cannot be observed.",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "unpkg": "index.js",
+  "scripts": {
+    "build": "npm run cjs && npm test",
+    "cjs": "ascjs esm cjs",
+    "test": "istanbul cover test/index.js"
+  },
+  "keywords": [
+    "secure",
+    "function",
+    "call",
+    "apply",
+    "bind"
+  ],
+  "author": "Andrea Giammarchi",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WebReflection/safer-function.git"
+  },
+  "bugs": {
+    "url": "https://github.com/WebReflection/safer-function/issues"
+  },
+  "homepage": "https://github.com/WebReflection/safer-function#readme",
+  "dependencies": {
+    "safer-function": "^0.1.0"
+  },
+  "devDependencies": {
+    "ascjs": "^3.0.1",
+    "coveralls": "^3.0.3",
+    "istanbul": "^0.4.5"
+  },
+  "directories": {
+    "test": "test"
+  }
+}
