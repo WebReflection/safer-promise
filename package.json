@@ -6,8 +6,13 @@
   "module": "esm/index.js",
   "unpkg": "index.js",
   "scripts": {
-    "build": "npm run cjs && npm test",
+    "build": "npm run cjs && npm run rollup && npm run clean && npm test && npm run min && npm run size",
     "cjs": "ascjs esm cjs",
+    "clean": "sed -i.bck -e 's/exports\\..*//' index.js && sed -i.bck 's/return exports;/return SaferPromise;/' index.js && rm index.js.bck",
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "min": "echo '/*! (c) Andrea Giammarchi - ISC */' > min.js && uglifyjs index.js -c -m >> min.js",
+    "rollup": "rollup --config rollup.config.js",
+    "size": "cat index.js | wc -c;cat min.js | wc -c;gzip -c9 min.js | wc -c",
     "test": "istanbul cover test/index.js"
   },
   "keywords": [
@@ -33,7 +38,10 @@
   "devDependencies": {
     "ascjs": "^3.0.1",
     "coveralls": "^3.0.3",
-    "istanbul": "^0.4.5"
+    "istanbul": "^0.4.5",
+    "rollup": "^1.11.3",
+    "rollup-plugin-node-resolve": "^4.2.4",
+    "uglify-es": "^3.3.9"
   },
   "directories": {
     "test": "test"

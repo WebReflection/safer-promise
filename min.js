@@ -1,0 +1,2 @@
+/*! (c) Andrea Giammarchi - ISC */
+var SaferPromise=function(e){"use strict";var t=Function.call,r=t.bind(t.bind),s=r(t,t.apply);t=r(t,t);const{freeze:c,setPrototypeOf:o}=Object,{prototype:n,reject:i,resolve:a}=Promise,{catch:u,then:p}=n;class l extends Promise{static reject(e){return t(i,l,j(e))}static resolve(e){return t(a,l,j(e))}constructor(e){c(super(e))}catch(){return s(u,this,arguments)}then(){return s(p,this,arguments)}}const{prototype:h,reject:v,resolve:f}=l,j=e=>o(e,h);return c(l),c(h),l}();
