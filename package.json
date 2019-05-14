@@ -21,12 +21,12 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/WebReflection/safer-function.git"
+    "url": "git+https://github.com/WebReflection/safer-promise.git"
   },
   "bugs": {
-    "url": "https://github.com/WebReflection/safer-function/issues"
+    "url": "https://github.com/WebReflection/safer-promise/issues"
   },
-  "homepage": "https://github.com/WebReflection/safer-function#readme",
+  "homepage": "https://github.com/WebReflection/safer-promise#readme",
   "dependencies": {
     "safer-function": "^0.1.0"
   },
