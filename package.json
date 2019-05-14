@@ -4,7 +4,7 @@
   "description": "A Promise that cannot be observed.",
   "main": "cjs/index.js",
   "module": "esm/index.js",
-  "unpkg": "index.js",
+  "unpkg": "min.js",
   "scripts": {
     "build": "npm run cjs && npm run rollup && npm run clean && npm test && npm run min && npm run size",
     "cjs": "ascjs esm cjs",

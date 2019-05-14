@@ -1,5 +1,8 @@
 # safer-promise
 
+[![Build Status](https://travis-ci.com/WebReflection/safer-promise.svg?branch=master)](https://travis-ci.com/WebReflection/safer-promise) [![Coverage Status](https://coveralls.io/repos/github/WebReflection/safer-promise/badge.svg?branch=master)](https://coveralls.io/github/WebReflection/safer-promise?branch=master) ![WebReflection status](https://offline.report/status/webreflection.svg)
+
+
 A Promise that cannot be observed, with `resolve` and `reject` methods able to secure other promises too.
 
 ```js
