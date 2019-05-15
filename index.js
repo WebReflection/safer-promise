@@ -29,7 +29,14 @@ var SaferPromise = (function (exports) {
   }
 
   const {prototype, reject, resolve} = SaferPromise;
-  const convert = value => setPrototypeOf(value, prototype);
+  const convert = value => (
+    typeof value === 'object' &&
+    value !== null &&
+    'then' in value &&
+    !(value instanceof SaferPromise) ?
+      setPrototypeOf(value, prototype) :
+      value
+  );
 
   freeze(SaferPromise);
   freeze(prototype);
