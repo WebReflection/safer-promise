@@ -7,9 +7,60 @@ var SaferPromise = (function (exports) {
   var apply = bind(call, call.apply);
   call = bind(call, call);
 
+  /*! (c) Andrea Giammarchi - ISC */
+
+  const {
+    defineProperty,
+    getPrototypeOf,
+    getOwnPropertyDescriptor,
+    getOwnPropertyNames,
+    getOwnPropertySymbols,
+    hasOwnProperty
+  } = Object;
+
+  const falsify = (descriptor, name) => {
+    defineProperty(descriptor, name, {
+      enumerable: true,
+      value: false
+    });
+  };
+
+  const updated = descriptor => {
+    falsify(descriptor, 'configurable');
+    if (call(hasOwnProperty, descriptor, 'writable'))
+      falsify(descriptor, 'writable');
+    return descriptor;
+  };
+
+  var saferObject = object => {
+    const self = object;
+    const names = [];
+    const descriptors = [];
+    do {
+      getOwnPropertyNames(object).concat(getOwnPropertySymbols(object))
+      .forEach(name => {
+        if (!names.includes(name)) {
+          names.push(name);
+          descriptors.push(getOwnPropertyDescriptor(object, name));
+        }
+      });
+    }
+    while (object = getPrototypeOf(object));
+    names.forEach((name, i) => {
+      defineProperty(self, name, updated(descriptors[i]));
+    });
+    return self;
+  };
+
+  /*! (c) Andrea Giammarchi - ISC */
+
+  var saferClass = Class => (
+    saferObject(Class.prototype),
+    saferObject(Class)
+  );
+
   const {freeze, setPrototypeOf} = Object;
-  const {prototype: _prototype, reject: _reject, resolve: _resolve} = Promise;
-  const {catch: _catch, then: _then} = _prototype;
+  const {reject: _reject, resolve: _resolve} = Promise;
 
   class SaferPromise extends Promise {
     static reject(value) {
@@ -20,12 +71,6 @@ var SaferPromise = (function (exports) {
     }
     constructor(fn) {
       freeze(super(fn));
-    }
-    catch() {
-      return apply(_catch, this, arguments);
-    }
-    then() {
-      return apply(_then, this, arguments);
     }
   }
 
@@ -39,6 +84,7 @@ var SaferPromise = (function (exports) {
       value
   );
 
+  saferClass(SaferPromise);
   freeze(SaferPromise);
   freeze(prototype);
 

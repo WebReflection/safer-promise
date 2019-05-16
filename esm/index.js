@@ -1,8 +1,8 @@
-import {apply, call} from 'safer-function';
+import {call} from 'safer-function';
+import saferClass from 'safer-class';
 
 const {freeze, setPrototypeOf} = Object;
-const {prototype: _prototype, reject: _reject, resolve: _resolve} = Promise;
-const {catch: _catch, then: _then} = _prototype;
+const {reject: _reject, resolve: _resolve} = Promise;
 
 class SaferPromise extends Promise {
   static reject(value) {
@@ -13,12 +13,6 @@ class SaferPromise extends Promise {
   }
   constructor(fn) {
     freeze(super(fn));
-  }
-  catch() {
-    return apply(_catch, this, arguments);
-  }
-  then() {
-    return apply(_then, this, arguments);
   }
 }
 
@@ -32,6 +26,7 @@ const convert = value => (
     value
 );
 
+saferClass(SaferPromise);
 freeze(SaferPromise);
 freeze(prototype);
 
